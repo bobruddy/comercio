@@ -29,6 +29,6 @@ class handler(BaseHTTPRequestHandler):
         cursor.execute("select * from comercio.tickers_daily order by ticker")
         values_array = list(cursor.fetchall())
         num_rows = len(values_array)
-        self.wfile.write(f"Found {num_rows} rows")
+        self.wfile.write(f"Found {num_rows} rows".encode('utf-8'))
 
         return
