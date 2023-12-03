@@ -3,13 +3,13 @@ testing connectivity on vercel
 """
 
 from http.server import BaseHTTPRequestHandler
-import psycopg2
 import os
+import psycopg2
 
 
 class handler(BaseHTTPRequestHandler):
 
-    def db_connection():
+    def db_connection(self):
         return psycopg2.connect(
             host=os.environ.get('POSTGRES_HOST'),
             dbname=os.environ.get('POSTGRES_DATABASE'),
@@ -28,6 +28,7 @@ class handler(BaseHTTPRequestHandler):
         cursor = conn.cursor()
         cursor.execute("select * from comercio.tickers_daily order by ticker")
         values_array = list(cursor.fetchall())
-        self.wfile.write(f"Found {} rows".format(len(values_array)))
+        num_rows = len(values_array)
+        self.wfile.write(f"Found {num_rows} rows")
 
         return
